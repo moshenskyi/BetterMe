@@ -1,4 +1,4 @@
-package app.bettermetesttask.movies.sections
+package app.bettermetesttask.movies.sections.movies
 
 import app.bettermetesttask.domainmovies.entries.Movie
 
