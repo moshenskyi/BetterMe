@@ -7,12 +7,10 @@ import app.bettermetesttask.domainmovies.entries.Movie
 import app.bettermetesttask.domainmovies.interactors.AddMovieToFavoritesUseCase
 import app.bettermetesttask.domainmovies.interactors.ObserveMoviesUseCase
 import app.bettermetesttask.domainmovies.interactors.RemoveMovieFromFavoritesUseCase
-import kotlinx.coroutines.GlobalScope
+import app.bettermetesttask.movies.navigation.MovieCoordinator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,7 +18,8 @@ class MoviesViewModel @Inject constructor(
     private val observeMoviesUseCase: ObserveMoviesUseCase,
     private val likeMovieUseCase: AddMovieToFavoritesUseCase,
     private val dislikeMovieUseCase: RemoveMovieFromFavoritesUseCase,
-    private val adapter: MoviesAdapter
+    private val adapter: MoviesAdapter,
+    private val coordinator: MovieCoordinator
 ) : ViewModel() {
 
     private val moviesMutableFlow: MutableStateFlow<MoviesState> = MutableStateFlow(MoviesState.Initial)
@@ -51,6 +50,6 @@ class MoviesViewModel @Inject constructor(
     }
 
     fun openMovieDetails(movie: Movie) {
-        // TODO: todo todo todo todo
+        coordinator.showDetails(movie.id)
     }
 }
