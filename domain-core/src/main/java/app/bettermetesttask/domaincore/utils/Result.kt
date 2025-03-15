@@ -23,3 +23,8 @@ sealed class Result<out T> {
             is Error -> "Error[throwable= $error]"
         }
 }
+
+inline fun <T> Result<T>.getOrDefault(action: () -> T): Result<T> {
+    return if (this is Result.Error) Result.of(action)
+    else this
+}
