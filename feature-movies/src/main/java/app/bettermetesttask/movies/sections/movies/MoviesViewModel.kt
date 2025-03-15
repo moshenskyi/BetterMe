@@ -9,11 +9,13 @@ import app.bettermetesttask.domainmovies.interactors.ObserveMoviesUseCase
 import app.bettermetesttask.domainmovies.interactors.RemoveMovieFromFavoritesUseCase
 import app.bettermetesttask.movies.R
 import app.bettermetesttask.movies.navigation.MovieCoordinator
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,26 +27,23 @@ class MoviesViewModel @Inject constructor(
     private val coordinator: MovieCoordinator
 ) : ViewModel() {
 
-    private val moviesMutableFlow: MutableStateFlow<MoviesState> =
-        MutableStateFlow(MoviesState.Loading)
+    private val triggerFlow: StateFlow<Unit> = MutableStateFlow(Unit)
 
-    val moviesStateFlow: StateFlow<MoviesState>
-        get() = moviesMutableFlow.asStateFlow()
-
-    fun loadMovies() {
-        viewModelScope.launch {
-            observeMoviesUseCase()
-                .onStart { moviesMutableFlow.update { MoviesState.Loading } }
-                .collect { result ->
-                    if (result is Result.Success) {
-                        moviesMutableFlow.update { MoviesState.Loaded(result.data) }
-                        adapter.submitList(result.data)
-                    } else {
-                        moviesMutableFlow.update { MoviesState.Error(R.string.error_unknown) }
-                    }
-                }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val moviesStateFlow: StateFlow<MoviesState> = triggerFlow.flatMapLatest {
+        return@flatMapLatest observeMoviesUseCase()
+    }.map { result ->
+        if (result is Result.Success) {
+            adapter.submitList(result.data)
+            MoviesState.Loaded(result.data)
+        } else {
+            MoviesState.Error(R.string.error_unknown)
         }
-    }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = MoviesState.Loading
+    )
 
     fun likeMovie(movie: Movie) {
         viewModelScope.launch {

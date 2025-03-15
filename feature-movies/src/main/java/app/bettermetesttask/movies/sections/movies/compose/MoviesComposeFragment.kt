@@ -77,7 +77,6 @@ class MoviesComposeFragment : Fragment(), Injectable {
                     viewState,
                     likeMovie = { movie -> viewModel.likeMovie(movie) },
                     selectMovie = { movie -> viewModel.openMovieDetails(movie) },
-                    viewLoaded = { viewModel.loadMovies() }
                 )
             }
         }
@@ -89,9 +88,7 @@ private fun MoviesComposeScreen(
     moviesState: MoviesState,
     likeMovie: (Movie) -> Unit,
     selectMovie: (Movie) -> Unit,
-    viewLoaded: () -> Unit
 ) {
-    viewLoaded()
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -194,5 +191,5 @@ private fun PreviewsMoviesComposeScreen() {
                 liked = index % 2 == 0,
             )
         }
-    ), likeMovie = {}, selectMovie = {}, viewLoaded = {})
+    ), likeMovie = {}, selectMovie = {})
 }
