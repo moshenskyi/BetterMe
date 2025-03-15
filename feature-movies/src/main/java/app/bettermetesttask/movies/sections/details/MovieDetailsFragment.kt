@@ -8,11 +8,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,6 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.bettermetesttask.domainmovies.entries.MovieDetails
 import app.bettermetesttask.featurecommon.injection.utils.Injectable
 import app.bettermetesttask.featurecommon.injection.viewmodel.SimpleViewModelProviderFactory
+import app.bettermetesttask.movies.navigation.ARG_MOVIE_ID
 import coil3.compose.AsyncImage
 import javax.inject.Inject
 import javax.inject.Provider
@@ -51,11 +50,13 @@ class MovieDetailsFragment : Fragment(), Injectable {
             setViewCompositionStrategy(
                 ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
             )
+
+            val movieId = arguments?.getInt(ARG_MOVIE_ID)
             setContent {
                 val viewState by viewModel.moviesStateFlow.collectAsStateWithLifecycle()
                 MovieDetailsScreen(
                     viewState = viewState,
-                    viewLoaded = { viewModel.loadDetails(1) }
+                    viewLoaded = { viewModel.loadDetails(movieId) }
                 )
             }
         }

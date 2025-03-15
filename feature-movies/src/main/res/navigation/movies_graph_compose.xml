@@ -18,8 +18,13 @@
         android:id="@+id/movieDetails"
         android:name="app.bettermetesttask.movies.sections.details.MovieDetailsFragment"
         android:label="MovieDetailsFragment">
+
         <action
             android:id="@+id/action_movie_details_back"
             app:destination="@id/moviesFragmentCompose" />
+
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
     </fragment>
 </navigation>
