@@ -30,9 +30,11 @@ class MoviesAdapter @Inject constructor() : ListAdapter<Movie, MoviesAdapter.Mov
             with(binding) {
                 titleTv.text = item.title
                 descriptionTv.text = item.description
+
                 GlideApp.with(binding.rootLayout)
                     .load(item.posterPath)
                     .into(posterIv)
+
                 btnLike.setImageDrawable(
                     ContextCompat.getDrawable(
                         binding.rootLayout.context,
