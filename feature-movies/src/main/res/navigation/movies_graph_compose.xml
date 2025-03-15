@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/moviesFragmentCompose"
-        android:name="app.bettermetesttask.movies.sections.compose.MoviesComposeFragment">
+        android:name="app.bettermetesttask.movies.sections.movies.compose.MoviesComposeFragment">
 
         <deepLink app:uri="@string/movies_deep_link_compose" />
         <action
@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/movieDetails"
-        android:name="app.bettermetesttask.movies.details.MovieDetailsFragment"
+        android:name="app.bettermetesttask.movies.sections.details.MovieDetailsFragment"
         android:label="MovieDetailsFragment">
         <action
             android:id="@+id/action_movie_details_back"

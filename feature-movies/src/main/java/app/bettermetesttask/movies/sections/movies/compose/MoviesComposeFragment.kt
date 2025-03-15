@@ -1,4 +1,4 @@
-package app.bettermetesttask.movies.sections.compose
+package app.bettermetesttask.movies.sections.movies.compose
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -45,7 +45,7 @@ import app.bettermetesttask.domainmovies.entries.Movie
 import app.bettermetesttask.featurecommon.injection.utils.Injectable
 import app.bettermetesttask.featurecommon.injection.viewmodel.SimpleViewModelProviderFactory
 import app.bettermetesttask.movies.sections.MoviesState
-import app.bettermetesttask.movies.sections.MoviesViewModel
+import app.bettermetesttask.movies.sections.movies.MoviesViewModel
 import coil3.compose.AsyncImage
 import javax.inject.Inject
 import javax.inject.Provider

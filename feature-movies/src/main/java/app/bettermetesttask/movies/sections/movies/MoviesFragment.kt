@@ -1,4 +1,4 @@
-package app.bettermetesttask.movies.sections
+package app.bettermetesttask.movies.sections.movies
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +13,7 @@ import app.bettermetesttask.featurecommon.utils.views.gone
 import app.bettermetesttask.featurecommon.utils.views.visible
 import app.bettermetesttask.movies.R
 import app.bettermetesttask.movies.databinding.MoviesFragmentBinding
+import app.bettermetesttask.movies.sections.MoviesState
 import kotlinx.coroutines.Job
 import javax.inject.Inject
 import javax.inject.Provider
