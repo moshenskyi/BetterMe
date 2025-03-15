@@ -35,6 +35,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -97,7 +98,6 @@ private fun MoviesComposeScreen(
             .background(Color.White)
     ) {
         when (moviesState) {
-            MoviesState.Initial -> {}
             is MoviesState.Loaded -> {
                 LazyColumn {
                     items(moviesState.movies) { item ->
@@ -116,6 +116,15 @@ private fun MoviesComposeScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator()
+                }
+            }
+
+            is MoviesState.Error -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(stringResource(moviesState.message))
                 }
             }
         }
