@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
@@ -76,7 +77,6 @@ fun MovieDetailsScreen(
             .background(Color.White)
     ) {
         when (viewState) {
-            MovieDetailState.Initial -> {}
             is MovieDetailState.Loaded -> {
                 MovieDetails(viewState.movie)
             }
@@ -90,7 +90,14 @@ fun MovieDetailsScreen(
                 }
             }
 
-            is MovieDetailState.Error -> TODO()
+            is MovieDetailState.Error -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(stringResource(viewState.message))
+                }
+            }
         }
     }
 }
