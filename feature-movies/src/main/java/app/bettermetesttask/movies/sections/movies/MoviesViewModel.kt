@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,7 +25,8 @@ class MoviesViewModel @Inject constructor(
     private val coordinator: MovieCoordinator
 ) : ViewModel() {
 
-    private val moviesMutableFlow: MutableStateFlow<MoviesState> = MutableStateFlow(MoviesState.Loading)
+    private val moviesMutableFlow: MutableStateFlow<MoviesState> =
+        MutableStateFlow(MoviesState.Loading)
 
     val moviesStateFlow: StateFlow<MoviesState>
         get() = moviesMutableFlow.asStateFlow()
@@ -32,13 +34,13 @@ class MoviesViewModel @Inject constructor(
     fun loadMovies() {
         viewModelScope.launch {
             observeMoviesUseCase()
-                .onStart { moviesMutableFlow.emit(MoviesState.Loading) }
+                .onStart { moviesMutableFlow.update { MoviesState.Loading } }
                 .collect { result ->
                     if (result is Result.Success) {
-                        moviesMutableFlow.emit(MoviesState.Loaded(result.data))
+                        moviesMutableFlow.update { MoviesState.Loaded(result.data) }
                         adapter.submitList(result.data)
                     } else {
-                        moviesMutableFlow.emit(MoviesState.Error(R.string.error_unknown))
+                        moviesMutableFlow.update { MoviesState.Error(R.string.error_unknown) }
                     }
                 }
         }
