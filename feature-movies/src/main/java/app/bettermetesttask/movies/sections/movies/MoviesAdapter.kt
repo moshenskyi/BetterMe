@@ -1,4 +1,4 @@
-package app.bettermetesttask.movies.sections
+package app.bettermetesttask.movies.sections.movies
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,7 +12,9 @@ import app.bettermetesttask.movies.R
 import app.bettermetesttask.movies.databinding.MovieItemBinding
 import javax.inject.Inject
 
-class MoviesAdapter @Inject constructor() : ListAdapter<Movie, MoviesAdapter.MoviesHolder>(MovieItemDiffCallback()) {
+class MoviesAdapter @Inject constructor() : ListAdapter<Movie, MoviesAdapter.MoviesHolder>(
+    MovieItemDiffCallback()
+) {
 
     var onItemClicked: ((movie: Movie) -> Unit)? = null
     var onItemLiked: ((movie: Movie) -> Unit)? = null
@@ -30,9 +32,11 @@ class MoviesAdapter @Inject constructor() : ListAdapter<Movie, MoviesAdapter.Mov
             with(binding) {
                 titleTv.text = item.title
                 descriptionTv.text = item.description
+
                 GlideApp.with(binding.rootLayout)
                     .load(item.posterPath)
                     .into(posterIv)
+
                 btnLike.setImageDrawable(
                     ContextCompat.getDrawable(
                         binding.rootLayout.context,

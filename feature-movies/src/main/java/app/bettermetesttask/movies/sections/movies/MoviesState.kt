@@ -1,12 +1,12 @@
-package app.bettermetesttask.movies.sections
+package app.bettermetesttask.movies.sections.movies
 
 import app.bettermetesttask.domainmovies.entries.Movie
 
 sealed class MoviesState {
 
-    object Initial : MoviesState()
-
-    object Loading : MoviesState()
+    data object Loading : MoviesState()
 
     data class Loaded(val movies: List<Movie>) : MoviesState()
+
+    data class Error(val message: Int) : MoviesState()
 }

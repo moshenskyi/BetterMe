@@ -32,6 +32,10 @@ class MoviesLocalStore @Inject constructor(
         moviesDao.removeLikedEntry(id)
     }
 
+    suspend fun saveMovies(movies: List<MovieEntity>) {
+        moviesDao.insertMovies(movies)
+    }
+
     fun observeLikedMoviesIds(): Flow<List<Int>> {
         return moviesDao.selectLikedEntries().map { movieIdsFlow -> movieIdsFlow.map { it.movieId } }
     }
